@@ -5,11 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"k8s.io/apimachinery/pkg/util/sets"
 	"net/http"
 	"regexp"
-	"sigs.k8s.io/yaml"
 	"strings"
+
+	"k8s.io/apimachinery/pkg/util/sets"
+	"sigs.k8s.io/yaml"
 
 	sdk "github.com/google/go-github/v36/github"
 	"github.com/opensourceways/community-robot-lib/config"
@@ -258,8 +259,10 @@ func (bot *robot) getMaintainers(org, repo, sigName string, number int, config *
 		if p != nil {
 			for j := range p {
 				if (j == "maintain" || j == "push") && p[j] {
-					r = append(r, v[i].GetLogin())
-					break
+					if v[i].GetLogin() != "openEuler-bot" {
+						r = append(r, v[i].GetLogin())
+						break
+					}
 				}
 			}
 		}
