@@ -258,11 +258,9 @@ func (bot *robot) getMaintainers(org, repo, sigName string, number int, config *
 		p := v[i].Permissions
 		if p != nil {
 			for j := range p {
-				if (j == "maintain" || j == "push") && p[j] {
-					if v[i].GetLogin() != "openEuler-bot" {
-						r = append(r, v[i].GetLogin())
-						break
-					}
+				if (j == "maintain" || j == "push") && p[j] && v[i].GetLogin() != "openEuler-bot" {
+					r = append(r, v[i].GetLogin())
+					break
 				}
 			}
 		}
