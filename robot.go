@@ -36,6 +36,7 @@ Hi ***%s***, welcome to the %s Community.
 I'm the Bot here serving you. You can find the instructions on how to interact with me at **[Here](%s)**.
 If you have any questions, please contact the SIG: [%s](https://gitee.com/openeuler/community/tree/master/sig/%s), and any of the maintainers.
 `
+	robotName = "openEuler-bot"
 )
 
 type iClient interface {
@@ -254,12 +255,11 @@ func (bot *robot) getMaintainers(org, repo, sigName string, number int, config *
 	}
 
 	r := make([]string, 0, len(v))
-	const n = "openEuler-bot"
 	for i := range v {
 		p := v[i].Permissions
 		if p != nil {
 			for j := range p {
-				if (j == "maintain" || j == "push") && p[j] && v[i].GetLogin() != n {
+				if (j == "maintain" || j == "push") && p[j] && v[i].GetLogin() != robotName {
 					r = append(r, v[i].GetLogin())
 					break
 				}
